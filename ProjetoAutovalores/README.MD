@@ -26,6 +26,10 @@ python main.py
 
 As funções foram divididas em arquivos, facilitando a leitura e entendimento do código. Os passos em ordem são os seguintes:
 
+## Main
+
+Fazendo.
+
 ## Hessenberg
 
 O arquivo hessenberg.py contém uma função para reduzir uma matriz A à forma de Hessenberg usando transformações de Householder, retornada a matriz de Hessenberg H. A função deve seguir os seguintes passos:
@@ -40,4 +44,18 @@ A função deve retornar a matriz de Hessenberg H resultante.
 
 ## Iteração QR
 
-fazendo ainda
+Este módulo contém as funções para realizar as rotações de Givens e o ciclo QR completo, seguem os passos que foram feitos:
+1. Criamos a função `givens_rotation` para calcular os cossenos e senos necessários para as rotações.
+2. Implementamos a função `passo_qr_hessenberg` que realiza uma única iteração do ciclo QR, aplicando as rotações de Givens de forma eficiente.
+3. Finalmente, a função `iteracao_qr` roda o ciclo completo, repetindo as iterações até que os elementos abaixo da diagonal sejam suficientemente pequenos, revelando os autovalores na diagonal principal.
+4. O ciclo inclui um mecanismo de deslocamento (shift) para acelerar a convergência, e uma etapa de deflação para reduzir o tamanho do problema à medida que os autovalores vão sendo encontrados.
+5. Retornamos os autovalores encontrados.
+
+## Gerador
+
+Arquivo para gerar matrizes genéricas com autovalores reais, para testar o código. Segue os passos:
+1. Gerar um vetor de autovalores reais aleatórios.
+2. Construir uma matriz diagonal D com esses autovalores.
+3. Gerar uma matriz de transformação V aleatória (matriz de autovetores).
+4. Construir a matriz A usando a fórmula A = V * D * V^-1, garantindo que A tenha os autovalores desejados.
+
