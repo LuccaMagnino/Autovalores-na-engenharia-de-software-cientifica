@@ -1,14 +1,15 @@
 import numpy as np
+from numba import njit
 
 ## Função para reduzir uma matriz A à forma de Hessenberg usando transformações de Householder, retornando a matriz de Hessenberg H. ##
 
+@njit
 def reducao_hessenberg(A):
     
     #Pega o N da matriz
     n = A.shape[0]
     
-    #Deixa todos os valores em float
-    H = np.copy(A).astype(float) 
+    H = np.copy(A)
     
     #Loop desconsidera as ultimas duas colunas e a primeira linha
     for k in range(n - 2):
@@ -30,10 +31,12 @@ def reducao_hessenberg(A):
         # Normalização do vetor de Householder
         v = v / np.linalg.norm(v)
         
-        # Aplicação da transformação de Householder à direita e à esquerda
-        H[k+1:, k:] = H[k+1:, k:] - 2.0 * np.outer(v, np.dot(v, H[k+1:, k:]))
-        H[:, k+1:] = H[:, k+1:] - 2.0 * np.outer(np.dot(H[:, k+1:], v), v)
-        
+        H_fatia_esq = np.ascontiguousarray(H[k+1:, k:])
+        H[k+1:, k:] = H[k+1:, k:] - 2.0 * np.outer(v, np.dot(v, H_fatia_esq))
+
+        H_fatia_dir = np.ascontiguousarray(H[:, k+1:])
+        H[:, k+1:] = H[:, k+1:] - 2.0 * np.outer(np.dot(H_fatia_dir, v), v)
+
     #Limpando os erros do float
     for i in range(2, n):
         for j in range(i - 1):
