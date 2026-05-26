@@ -21,3 +21,25 @@ def gerar_matriz_padrao():
     ], dtype=np.float64)
     
     return A
+
+def gerar_matriz_reatores():
+    
+    N = 100
+    
+    diag_principal = -2.5
+    diag_secundaria = 1.0
+    
+    A = np.zeros((N,N))
+    
+    for i in range(N):
+        
+        A[i, i] = diag_principal
+        
+        if i > 0:
+            A[i, i-1] = diag_secundaria
+            
+        if i < N - 1:
+            A[i, i + 1] = diag_secundaria
+        
+    print(A)
+    return A

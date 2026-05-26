@@ -16,3 +16,5 @@ def gerar_matriz_padrao():
     ], dtype=np.float64)
     
     return A
+
+

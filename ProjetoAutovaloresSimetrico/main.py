@@ -4,7 +4,7 @@ import os
 import tracemalloc
 from src.hessenberg import reducao_hessenberg
 from src.iteracaoQR import iteracao_qr
-from src.gerador import gerar_matriz_generica_real, gerar_matriz_padrao
+from src.gerador import gerar_matriz_generica_real, gerar_matriz_padrao, gerar_matriz_reatores
 
 def calcular_multiplicidades(A, autovalores, tol=1e-4):
     n = A.shape[0]
@@ -31,7 +31,7 @@ def calcular_multiplicidades(A, autovalores, tol=1e-4):
         
     return resultados
 
-def rodar_teste(A, nome_teste, fase=3):
+def rodar_teste(A, nome_teste, fase):
     print(f"\n{'='*70}")
     
 
@@ -163,11 +163,8 @@ def menu_principal():
             rodar_teste(A, "Demonstracao_N=5", fase=3)
             
         elif escolha == '4':
-
-            # ATENÇÃO MACACOS (FASE 4):
-            # Substituam a matriz 'A' pela matriz 100x100 do exercício.
             
-            A = gerar_matriz_generica_real(100) 
+            A = gerar_matriz_reatores() 
             
 
             rodar_teste(A, "Matriz_Equipe_100x100", fase=4)
