@@ -111,16 +111,31 @@ def rodar_teste(A, nome_teste, fase):
         np.savetxt(arq_hessenberg, H, delimiter=";", fmt="%.2f")
         
         mults = calcular_multiplicidades(A, autovalores)
+        estavel = True
         
         with open(arq_autovalores, 'w') as f:
             f.write("Autovalor;Multiplicidade Algebrica;Multiplicidade Geometrica\n")
             for val, ma, mg in mults:
                 f.write(f"{val:.2f};{ma};{mg}\n")
+                if np.real(val) >= 0:
+                    estavel = False
+                    
+        parte_real = np.real(autovalores)
+        modulos = np.abs(parte_real)
+        maior = np.max(modulos)
+        menor = np.min(modulos)
+        S = maior / menor
         
         print(f"[+] Sucesso: {n} autovalores processados.")
         if n > 50:
             print("[!] Aviso: Multiplicidade Geometrica omitida no CSV para evitar complexidade O(N^4).")
             
+        if estavel:
+            print("[+] Todos os autovalores possuem parte real negativa (Sistema assintoticamente estável).")
+        else:
+            print("[!!!] Existe pelo menos um autovalor com parte real não negativa (Sistema não assintoticamente estável).")
+            
+        print(f"[+] Razão de rigidez: {S:.4f}")
         print(f"[+] Planilhas exportadas para a pasta './{pasta_resultados}/'.")
         print(f"{'='*70}")
 
