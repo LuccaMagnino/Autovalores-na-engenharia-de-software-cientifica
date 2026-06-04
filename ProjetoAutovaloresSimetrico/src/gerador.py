@@ -40,6 +40,6 @@ def gerar_matriz_reatores():
             
         if i < N - 1:
             A[i, i + 1] = diag_secundaria
-        
+    print("\n")    
     print(A)
     return A
